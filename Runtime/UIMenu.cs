@@ -25,6 +25,9 @@ namespace SevenGame.UI {
             if ( UIManager.modalRoot == null ) {
                 UIManager.modalRoot = this;
             }
+            if ( UIManager.modalLeaf == null ) {
+                UIManager.modalLeaf = this;
+            }
 
             transform.SetSiblingIndex( transform.parent.childCount - 1 );
 
@@ -34,9 +37,13 @@ namespace SevenGame.UI {
 
         public override void Disable() {
 
-            if ( UIManager.modalRoot == (IUIModal)this ) {
+            if ( UIManager.modalRoot == (IUIMenu)this ) {
                 UIManager.DisableModalTree();
                 UIManager.modalRoot = null;
+            }
+
+            if ( UIManager.modalLeaf == (IUIMenu)this ) {
+                UIManager.modalLeaf = null;
             }
             
             base.Disable();
