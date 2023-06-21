@@ -35,6 +35,7 @@ namespace SevenGame.UI {
             }
             _previousModal?.Refresh();
             _previousModal?.EnableInteraction();
+            _previousModal?.ResetGamePadSelection();
             _previousModal = null;
             
 
