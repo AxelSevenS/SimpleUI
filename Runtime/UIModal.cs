@@ -14,6 +14,10 @@ namespace SevenGame.UI {
 
         public override void Enable() {
 
+            if ( UIManager.modalLeaf == null) {
+                UIManager.modalRoot?.DisableInteraction();
+            }
+
             if ( UIManager.modalLeaf != (IUIModal)this) {
                 _previousModal = UIManager.modalLeaf;
                 UIManager.modalLeaf?.DisableInteraction();
@@ -25,7 +29,6 @@ namespace SevenGame.UI {
 
 
         public override void Disable() {
-
 
             if ( UIManager.modalLeaf == (IUIModal)this) {
                 UIManager.modalLeaf = _previousModal;
