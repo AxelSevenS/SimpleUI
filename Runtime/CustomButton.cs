@@ -6,20 +6,28 @@ namespace SevenGame.UI {
 
     public abstract class CustomButton : Selectable, IPointerClickHandler, ISubmitHandler {
 
-        public virtual void OnPointerClick(PointerEventData eventData) {
-            OnSubmit(eventData);
+        public new virtual bool interactable {
+            get => base.interactable;
+            set => base.interactable = value;
+        } 
+
+        public abstract void OnButtonInteract(ButtonInputType inputType = ButtonInputType.Primary);
+
+        public void OnPointerClick(PointerEventData eventData) {
+            if (!interactable) return;
+            OnButtonInteract((ButtonInputType)eventData.button);
         }
 
-        public virtual void OnSubmit(BaseEventData eventData) {
-            Debug.Log($"Button {name} submitted");
+        public void OnSubmit(BaseEventData eventData) {
+            if (!interactable) return;
+            OnButtonInteract();
         }
 
-        public virtual void EnableInteraction() {
-            interactable = true;
-        }
 
-        public virtual void DisableInteraction() {
-            interactable = false;
+        public enum ButtonInputType {
+            Primary = PointerEventData.InputButton.Left,
+            Secondary = PointerEventData.InputButton.Right,
+            Tertiary = PointerEventData.InputButton.Middle
         }
     }
 
